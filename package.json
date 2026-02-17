@@ -1,5 +1,5 @@
 {
-  "name": "mega",
+  "name": "infinity-md",
   "version": "5.2.0",
   "description": "WhatsApp Bot",
   "main": "index.js",
@@ -28,10 +28,10 @@
     "whatsapp-api",
     "baileys-bot",
     "whatsApp",
-    "mega-bot",
-    "mega-md",
+    "infinity-bot",
+    "infinity-md",
     "multi-device",
-    "mega-ai"
+    "infinity-ai"
   ],
   "homepage": "https://github.com/GlobalTechInfo/MEGA-MD",
   "repository": {

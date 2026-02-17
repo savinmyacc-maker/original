@@ -26,8 +26,8 @@ module.exports = {
                 return await sock.sendMessage(chatId, { text: '❌ *Error:* File too large (Limit: 500MB)' }, { quoted: message });
             }
 
-            const { key } = await sock.sendMessage(chatId, { 
-                text: `🌩️ *MEGA DOWNLOAD*\n\n▢ *File:* ${file.name}\n▢ *Size:* ${this.formatBytes(file.size)}\n\n*Progress:* 0% [░░░░░░░░░░]` 
+                const { key } = await sock.sendMessage(chatId, { 
+                text: `🌩️ *INFINITY DOWNLOAD*\n\n▢ *File:* ${file.name}\n▢ *Size:* ${this.formatBytes(file.size)}\n\n*Progress:* 0% [░░░░░░░░░░]` 
             }, { quoted: message });
 
             const stream = file.download();
@@ -41,7 +41,7 @@ module.exports = {
                 if (Date.now() - lastUpdate > 3000 || percentage === 100) {
                     const bar = this.generateBar(percentage);
                     await sock.sendMessage(chatId, { 
-                        text: `🌩️ *MEGA DOWNLOAD*\n\n▢ *File:* ${file.name}\n▢ *Size:* ${this.formatBytes(bytesTotal)}\n\n*Progress:* ${percentage}% [${bar}]`,
+                        text: `🌩️ *INFINITY DOWNLOAD*\n\n▢ *File:* ${file.name}\n▢ *Size:* ${this.formatBytes(bytesTotal)}\n\n*Progress:* ${percentage}% [${bar}]`,
                         edit: key 
                     });
                     lastUpdate = Date.now();

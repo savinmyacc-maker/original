@@ -1,10 +1,10 @@
 const settings = {
   prefixes: ['.', '!', '/', '#'], // Multiple prefix support you can add one or more
-  packname: 'MEGA-MD',
+  packname: 'Infinity MD',
   author: '‎GlobalTechInfo',
   timeZone: 'Asia/Karachi',
-  botName: "MEGA-MD", // your bot name
-  botOwner: 'Qasim Ali', // set your name
+  botName: "Infinity MD", // your bot name
+  botOwner: '@jid user name', // set your name
   ownerNumber: '923051391007', // Set your number here without + symbol, just add country code & number without any space
   giphyApiKey: 'qnl7ssQChTdPjsKta2Ax2LMaGXz303tq',
   commandMode: "public",

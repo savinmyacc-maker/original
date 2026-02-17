@@ -25,7 +25,7 @@ module.exports = {
         return;
       }
       
-      const packname = args.join(' ') || 'MEGA AI';
+      const packname = args.join(' ') || 'Infinity MD';
 
       try {
         const stickerBuffer = await downloadMediaMessage(

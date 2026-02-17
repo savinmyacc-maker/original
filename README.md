@@ -2,7 +2,7 @@
 
 <div align="center"> 
   <a href="https://youtube.com/@GlobalTechInfo"> 
-    <img src="https://github.com/GlobalTechInfo/MEGA-MD/blob/main/assets/bot_image.jpg" alt="MEGA AI" height="300"> 
+   <img src="https://github.com/GlobalTechInfo/MEGA-MD/blob/main/assets/bot_image.jpg" alt="Infinity MD" height="300"> 
   </a> 
 </div>
 
@@ -20,7 +20,7 @@
 
 ---
  <p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=600&size=24&duration=4000&pause=1000&color=FF0000&center=true&vCenter=true&width=500&lines=MEGA+PRO+WHATSAPP+BOT;MULTI-DEVICE+SUPPORT;POWERED+BY+BAILEYS;FAST++SECURE++RELIABLE" alt="Typing SVG"/>
+   <img src="https://readme-typing-svg.demolab.com?font=Orbitron&weight=600&size=24&duration=4000&pause=1000&color=FF0000&center=true&vCenter=true&width=500&lines=INFINITY+PRO+WHATSAPP+BOT;MULTI-DEVICE+SUPPORT;POWERED+BY+BAILEYS;FAST++SECURE++RELIABLE" alt="Typing SVG"/>
 </p>
 
 ---
@@ -29,7 +29,7 @@
 
 ### Step 1: Fork the Repository
 
-Click the button below to fork the Mega Md repository to your GitHub account:
+Click the button below to fork the Infinity MD repository to your GitHub account:
 
 <div align="center">
   <a href="https://github.com/GlobalTechInfo/MEGA-MD/fork">
@@ -175,7 +175,7 @@ Easily connect to your WhatsApp account by pair code.
 
 ## About
 
-The MEGA AI WhatsApp Bot assists group admins by providing them with tools to efficiently manage large WhatsApp groups. The bot uses the Baileys library to interact with the WhatsApp Web API and supports multi-device features.
+The Infinity MD WhatsApp Bot assists group admins by providing them with tools to efficiently manage large WhatsApp groups. The bot uses the Baileys library to interact with the WhatsApp Web API and supports multi-device features.
 
 It is lightweight and can be easily customized to add more commands as per your requirements. The bot runs in a Node.js environment and provides QR code-based authentication to link your WhatsApp account.
 
