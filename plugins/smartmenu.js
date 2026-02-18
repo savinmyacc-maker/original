@@ -55,11 +55,13 @@ module.exports = {
   aliases: ['shelp', 'smart', 'menu', 'help'],
   category: 'general',
   description: 'Interactive smart menu with live status',
-  usage: '.menu',
+  usage: '.menu [forward]',
   isPrefixless: true,
 
   async handler(sock, message, args, context = {}) {
     const chatId = context.chatId || message.key.remoteJid;
+    const isForwarded = args && args.length > 0 && (args[0].toLowerCase() === 'forward' || args[0].toLowerCase() === 'fwd');
+    const forwardCount = parseInt(args?.[1]) || 5; // Default to 5 forwards if not specified
 
     try {
       const imagePath = pickRandomAsset();
@@ -67,6 +69,7 @@ module.exports = {
       console.log('Menu Debug - imagePath:', imagePath);
       console.log('Menu Debug - thumbnail exists:', !!thumbnail);
       console.log('Menu Debug - thumbnail size:', thumbnail ? thumbnail.length : 0);
+      console.log('Menu Debug - isForwarded:', isForwarded, 'forwardCount:', forwardCount);
 
       const commandCount = CommandHandler.commands.size;
       const prefix = settings.prefixes ? settings.prefixes[0] : '.';
@@ -90,17 +93,24 @@ module.exports = {
         `╰──────────────────────╯\n\n` +
         `💫 INFINITY MD - Powered by AI`;
 
+      const messageOptions = { quoted: message };
+      
+      // Add forward metadata if requested
+      if (isForwarded) {
+        messageOptions.forward = forwardCount;
+      }
+
       if (thumbnail) {
         console.log('Sending menu with image, size:', thumbnail.length);
         await sock.sendMessage(chatId, {
           image: thumbnail,
           caption: menuText
-        }, { quoted: message });
+        }, messageOptions);
       } else {
         console.log('Sending menu as text only');
         await sock.sendMessage(chatId, {
           text: menuText
-        }, { quoted: message });
+        }, messageOptions);
       }
 
     } catch (error) {
