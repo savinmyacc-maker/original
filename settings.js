@@ -14,7 +14,7 @@ const settings = {
   menuImageUrls: [], // e.g. ['https://example.com/menu1.jpg']
   pingImageUrls: [], // e.g. ['https://example.com/ping1.jpg']
   // Small note appended to the connected notification
-  connectNote: '✅Make sure to join below channel',
+  connectNote: '',
   giphyApiKey: 'qnl7ssQChTdPjsKta2Ax2LMaGXz303tq',
   commandMode: "public",
   maxStoreMessages: 20,
@@ -23,7 +23,7 @@ const settings = {
   description: "This is a bot for managing group commands and automating tasks.",
   version: "5.1.0",
   updateZipUrl: "https://github.com/GlobalTechInfo/MEGA-MD/archive/refs/heads/main.zip",
-  channelLink: "https://whatsapp.com/channel/0029VagJIAr3bbVBCpEkAM07",
+  channelLink: "",
   ytch: "GlobalTechInfo"
 };
 

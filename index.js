@@ -76,7 +76,7 @@ setInterval(() => {
 let phoneNumber = global.PAIRING_NUMBER || process.env.PAIRING_NUMBER || "923051391005";
 let owner = JSON.parse(fs.readFileSync('./data/owner.json'));
 
-global.botname = process.env.BOT_NAME || "MEGA-MD";
+global.botname = process.env.BOT_NAME || settings.botName || 'Bot';
 global.themeemoji = "•";
 
 const pairingCode = !!phoneNumber || process.argv.includes("--pairing-code");
@@ -141,17 +141,16 @@ async function sendConnectedNotification(client, ghostMode) {
         }
 
         const ghostStatus = (ghostMode && ghostMode.enabled) ? '\n👻 Stealth Mode: ACTIVE' : '';
-        const text = `🤖 Bot Connected Successfully!\n\n⏰ Time: ${new Date().toLocaleString()}\n✅ Status: Online and Ready!${ghostStatus}\n\n${settings.connectNote || '✅Make sure to join below channel'}`;
+        const text = `🤖 Bot Connected Successfully!\n\n⏰ Time: ${new Date().toLocaleString()}\n✅ Status: Online and Ready!${ghostStatus}\n\n${settings.connectNote || ''}`;
 
-        const contextInfo = {
-            forwardingScore: settings.forwardingScore || 1,
-            isForwarded: true,
-            forwardedNewsletterMessageInfo: {
-                newsletterJid: settings.newsletterJid || '120363319098372999@newsletter',
-                newsletterName: settings.newsletterName || 'MEGA MD',
+        const contextInfo = { forwardingScore: settings.forwardingScore || 1, isForwarded: true };
+        if (settings.newsletterJid && settings.newsletterName) {
+            contextInfo.forwardedNewsletterMessageInfo = {
+                newsletterJid: settings.newsletterJid,
+                newsletterName: settings.newsletterName,
                 serverMessageId: -1
-            }
-        };
+            };
+        }
 
         // try sending with image first (if available), fallback to text-only
         const maxAttempts = 3;

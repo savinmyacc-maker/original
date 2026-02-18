@@ -3,10 +3,10 @@
   "botOwner": "@jid user name",
   "menuImageUrls": [],
   "pingImageUrls": [],
-  "connectNote": "✅Make sure to join below channel",
+  "connectNote": "",
   "forwardingScore": 1,
   "newsletterJid": "120363319098372999@newsletter",
-  "newsletterName": "MEGA MD"
+  "newsletterName": ""
   ,"apiKeys": {
     "cinesubz": "",
     "movie": ""
