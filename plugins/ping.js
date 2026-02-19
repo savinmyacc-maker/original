@@ -3,6 +3,8 @@ const os = require('os');
 const dns = require('dns');
 const fs = require('fs');
 const path = require('path');
+const axios = require('axios');
+const axios = require('axios');
 
 function pickRandomAsset() {
   const assetsDir = path.join(__dirname, '../assets');
@@ -15,6 +17,30 @@ function pickRandomAsset() {
   } catch {
     return null;
   }
+}
+
+async function fetchBufferFromUrls(urls) {
+  if (!urls || !urls.length) return null;
+  for (const url of urls) {
+    try {
+      const res = await axios.get(url, { responseType: 'arraybuffer', timeout: 5000 });
+      if (res && res.data) return Buffer.from(res.data);
+    } catch (e) {
+      console.log('fetchBufferFromUrls failed for', url, e.message);
+      continue;
+    }
+  }
+  return null;
+}
+
+async function getRandomImageBufferForPing() {
+  const fromSettings = await fetchBufferFromUrls(settings.pingImageUrls);
+  if (fromSettings) return fromSettings;
+  const imgPath = pickRandomAsset();
+  if (imgPath && fs.existsSync(imgPath)) {
+    try { return fs.readFileSync(imgPath); } catch (e) { console.log('read local image failed', e.message); }
+  }
+  return null;
 }
 
 async function dnsPing(host = 'google.com', timeoutMs = 2000) {
@@ -70,6 +96,30 @@ function safeStr(x, fallback) {
   }
 }
 
+async function fetchBufferFromUrls(urls) {
+  if (!urls || !urls.length) return null;
+  for (const url of urls) {
+    try {
+      const res = await axios.get(url, { responseType: 'arraybuffer', timeout: 5000 });
+      if (res && res.data) return Buffer.from(res.data);
+    } catch (e) {
+      console.log('fetchBufferFromUrls failed for', url, e.message);
+      continue;
+    }
+  }
+  return null;
+}
+
+async function getRandomImageBufferForPing() {
+  const fromSettings = await fetchBufferFromUrls(settings.pingImageUrls);
+  if (fromSettings) return fromSettings;
+  const imgPath = pickRandomAsset();
+  if (imgPath && fs.existsSync(imgPath)) {
+    try { return fs.readFileSync(imgPath); } catch (e) { console.log('read local image failed', e.message); }
+  }
+  return null;
+}
+
 module.exports = {
   command: 'ping',
   aliases: ['p', 'pong'],
@@ -114,17 +164,18 @@ module.exports = {
 ✨ Everything working perfectly!`;
 
     try {
-      const imgPath = pickRandomAsset();
-      if (imgPath && fs.existsSync(imgPath)) {
+      const imgBuf = await getRandomImageBufferForPing();
+      if (imgBuf) {
         await sock.sendMessage(
           chatId,
-          { image: fs.readFileSync(imgPath), caption: statusMsg },
+          { image: imgBuf, caption: statusMsg },
           { quoted: message }
         );
       } else {
         await sock.sendMessage(chatId, { text: statusMsg }, { quoted: message });
       }
-    } catch {
+    } catch (e) {
+      console.log('Ping send failed, falling back to text:', e.message);
       await sock.sendMessage(chatId, { text: statusMsg }, { quoted: message });
     }
   }

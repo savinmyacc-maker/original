@@ -3,6 +3,7 @@ const settings = require("../settings");
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
+const axios = require('axios');
 
 function pickRandomAsset() {
   const assetsDir = path.join(__dirname, '../assets');
@@ -22,6 +23,33 @@ function pickRandomAsset() {
     console.log('Error in pickRandomAsset:', e.message);
     return null;
   }
+}
+
+async function fetchBufferFromUrls(urls) {
+  if (!urls || !urls.length) return null;
+  for (const url of urls) {
+    try {
+      const res = await axios.get(url, { responseType: 'arraybuffer', timeout: 5000 });
+      if (res && res.data) return Buffer.from(res.data);
+    } catch (e) {
+      console.log('fetchBufferFromUrls failed for', url, e.message);
+      continue;
+    }
+  }
+  return null;
+}
+
+async function getRandomImageBuffer() {
+  // 1) Try configured URLs
+  const fromSettings = await fetchBufferFromUrls(settings.menuImageUrls);
+  if (fromSettings) return fromSettings;
+
+  // 2) Try local assets
+  const imagePath = pickRandomAsset();
+  if (imagePath && fs.existsSync(imagePath)) {
+    try { return fs.readFileSync(imagePath); } catch (e) { console.log('read local image failed', e.message); }
+  }
+  return null;
 }
 
 function formatUptime() {
@@ -64,9 +92,7 @@ module.exports = {
     const forwardCount = parseInt(args?.[1]) || 5; // Default to 5 forwards if not specified
 
     try {
-      const imagePath = pickRandomAsset();
-      const thumbnail = imagePath && fs.existsSync(imagePath) ? fs.readFileSync(imagePath) : null;
-      console.log('Menu Debug - imagePath:', imagePath);
+      const thumbnail = await getRandomImageBuffer();
       console.log('Menu Debug - thumbnail exists:', !!thumbnail);
       console.log('Menu Debug - thumbnail size:', thumbnail ? thumbnail.length : 0);
       console.log('Menu Debug - isForwarded:', isForwarded, 'forwardCount:', forwardCount);
@@ -75,7 +101,7 @@ module.exports = {
       const prefix = settings.prefixes ? settings.prefixes[0] : '.';
 
       const load = os.loadavg()[0] ? os.loadavg()[0].toFixed(2) : '0.00';
-      let menuText = `╭─〔 🤖 INFINITY MD 〕─╮\n` +
+      let menuText = `╭─〔 🤖 ${settings.botName || 'Bot'} 〕─╮\n` +
         `│ 👤 Owner : ${settings.botOwner || 'Default Publisher'}\n` +
         `│ 📊 Commands : ${commandCount}+    │ ⌨️ Prefix : ${prefix}\n` +
         `│ ⏱ Uptime  : ${formatUptime()}\n` +
@@ -91,7 +117,7 @@ module.exports = {
         `│ 🧠 ${prefix}convertmenu │ ⚙️ ${prefix}settingsmenu\n` +
         `│ 🗄 ${prefix}dbmenu      │ 🧪 ${prefix}othermenu\n` +
         `╰──────────────────────╯\n\n` +
-        `💫 INFINITY MD - Powered by AI`;
+        `💫 ${settings.botName || 'Bot'} - Ready to help`;
 
       const messageOptions = { quoted: message };
       
